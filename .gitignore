@@ -1,0 +1,10 @@
+#To ignore files which not to need commit on git 
+*.jar
+*.ear
+*.war
+*.log
+
+#To remove bin folder from commit
+bin/
+build/
+node_modules/
