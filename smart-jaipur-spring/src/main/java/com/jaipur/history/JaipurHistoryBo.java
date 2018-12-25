@@ -18,7 +18,13 @@ public class JaipurHistoryBo {
 	@ResponseBody
 	public String retrieveWelcomeMessage(@RequestParam(value= "place", defaultValue= "Ajmeri Gate", required=false) String localPlace) {
 		// Complex Method //
-		return this.history.getPlace(localPlace);
+		try {
+			return this.history.getPlace(localPlace);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ("Error Occured");
+		}
 	}
 	
 }

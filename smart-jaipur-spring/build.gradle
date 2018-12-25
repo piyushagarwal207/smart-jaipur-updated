@@ -16,9 +16,40 @@ plugins {
     // Apply spring boot plugin to add support for spring boot
     id 'org.springframework.boot' version '2.1.1.RELEASE'
     
+    id 'eclipse'
+    
+    id  'war'
+    
     // Apply build scan plugin for scan every build //
     // id 'com.gradle.build-scan' version '1.16'
 }
+
+configurations {
+    testRuntime.exclude group: 'log4j',     module: 'log4j'
+    testRuntime.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
+ ext {
+    log4jVersion = '1.2.17'
+    slf4jVersion = '1.7.25'
+    junitVersion = '4.12'
+    mysqldriverversion = '8.0.13'
+}
+/*assets {
+   minifyJs = true
+   minifyCss = true
+}*/
+
+/*repositories {
+   mavenLocal()
+   maven { url "https://repo.grails.org/grails/core" }
+}*/
+
+/* dependencyManagement {
+  imports {
+      mavenBom "org.grails:grails-bom:$grailsVersion"
+   }
+   applyMavenExclusions false
+} */
 
 // Define the main class for the application
 mainClassName = 'com.jaipur.history.HelloWorld'
@@ -29,13 +60,17 @@ dependencies {
     compile 'joda-time:joda-time:2.2'
     compile 'org.springframework.boot:spring-boot-dependencies:2.1.1.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-web:2.1.1.RELEASE'
-    compile 'org.springframework.boot:spring-boot-starter-jpa:2.1.1.RELEASE'
-    compile 'mysql:mysql-connector-java'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa:2.1.1.RELEASE'
+    compile     'org.slf4j:slf4j-api:$slf4jVersion'
+    runtime 'mysql:mysql-connector-java:$mysqldriverversion'
+    runtime  'org.slf4j:slf4j-log4j12:$slf4jVersion'
+    runtime   'log4j:log4j:1.2.17'
+   
+    testRuntime 'org.slf4j:slf4j-simple:$slf4jVersion'
     
 
     // Use JUnit test framework
-    testCompile 'junit:junit:4.12'
-    
+    testCompile 'junit:junit:$junitVersion'
     
     testCompile 'org.springframework.boot:spring-boot-starter-test:2.1.1.RELEASE'
     
@@ -51,10 +86,17 @@ dependencies {
     }
 }
 
+/* war {
+}*/
+
+
 // In this section you declare where to find the dependencies of your project
 repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
 }
+/* task wrapper(type: Wrapper) {
+   gradleVersion = gradleWrapperVersion
+}*/
 
