@@ -7,6 +7,9 @@
  */
 
 plugins {
+    // Apply build scan plugin for scan every build and already added to parent project //
+    // id 'com.gradle.build-scan' version '2.1'
+    
     // Apply the java plugin to add support for Java
     id 'java'
 
@@ -19,21 +22,14 @@ plugins {
     id 'eclipse'
     
     id  'war'
-    
-    // Apply build scan plugin for scan every build //
-    // id 'com.gradle.build-scan' version '1.16'
 }
 
 configurations {
     testRuntime.exclude group: 'log4j',     module: 'log4j'
     testRuntime.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    // provided
 }
- ext {
-    log4jVersion = '1.2.17'
-    slf4jVersion = '1.7.25'
-    junitVersion = '4.12'
-    mysqldriverversion = '8.0.13'
-}
+ 
 /*assets {
    minifyJs = true
    minifyCss = true
@@ -53,20 +49,31 @@ configurations {
 
 // Define the main class for the application
 mainClassName = 'com.jaipur.history.HelloWorld'
-
+/*sourceSets {
+    main.compileClasspath += ''
+    test.compileClasspath += ''
+    test.runtimeClasspath += ''
+}*/
+ext {
+    log4jVersion = '1.2.17'
+    slf4jVersion = '1.7.25'
+    junitVersion = '4.12'
+    mysqldriverversion = '8.0.13'
+}
 dependencies {
+
     // This dependency is found on compile classpath of this component and consumers.
     compile 'com.google.guava:guava:23.0'
     compile 'joda-time:joda-time:2.2'
     compile 'org.springframework.boot:spring-boot-dependencies:2.1.1.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-web:2.1.1.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa:2.1.1.RELEASE'
-    compile     'org.slf4j:slf4j-api:$slf4jVersion'
-    runtime 'mysql:mysql-connector-java:$mysqldriverversion'
-    runtime  'org.slf4j:slf4j-log4j12:$slf4jVersion'
-    runtime   'log4j:log4j:1.2.17'
+    compile    'org.slf4j:slf4j-api:$slf4jVersion'
+    runtime "mysql:mysql-connector-java:$mysqldriverversion"
+    runtime  "org.slf4j:slf4j-log4j12:$slf4jVersion"
+    runtime   "log4j:log4j:1.2.17"
    
-    testRuntime 'org.slf4j:slf4j-simple:$slf4jVersion'
+    testRuntime "org.slf4j:slf4j-simple:$slf4jVersion"
     
 
     // Use JUnit test framework
@@ -85,6 +92,11 @@ dependencies {
         }
     }
 }
+/**  Already added at Parent project
+buildScan {
+    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+    termsOfServiceAgree = 'yes'
+}**/
 
 /* war {
 }*/

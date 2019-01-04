@@ -27,13 +27,21 @@ subprojects {
     version = '1.0'
 }
 
-
 buildScan {
 
     // always accept the terms of service
     termsOfServiceUrl = 'https://gradle.com/terms-of-service'
     termsOfServiceAgree = 'yes'
-
+    
+     if (System.getenv('CI')) {
+        publishAlways()
+        tag 'CI'
+    } else {
+       tag 'local'
+    }
     // always publish a build scan
-    publishAlways()
+    // publishAlways()
+    // publishAlwaysIf(boolean)
+    // publishOnFailure()
+    // publishOnFailureIf(boolean)
 }
